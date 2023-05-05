@@ -45,12 +45,3 @@ module.exports = {
   addContact,
   removeContact,
 };
-
-// listContacts();
-// getContactById("qdggE76Jtbfd9eWJHrssH")
-// addContact(
-//   "Alec Nolan Howard Junior",
-//   "Donec.elementum@scelerisquescelerisquedui.net",
-//   "(748) 206-2688"
-// );
-// removeContact("05431450-433c-4193-9b11-51e7df80311e")

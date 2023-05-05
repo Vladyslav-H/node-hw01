@@ -1,3 +1,5 @@
+const { program } = require("commander");
+
 const {
   listContacts,
   getContactById,
@@ -9,11 +11,14 @@ async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
       const contacts = await listContacts();
-      console.log(contacts);
+      console.table(contacts);
       break;
 
     case "get":
       const contact = await getContactById(id);
+      if (!contact) {
+        throw new Error(`Contact with id=${id} not found`);
+      }
       console.log(contact);
       break;
 
@@ -31,13 +36,16 @@ async function invokeAction({ action, id, name, email, phone }) {
       console.warn("\x1B[31m Unknown action type!");
   }
 }
-// invokeAction({action:"list"})
-// invokeAction({action:"get",id:"vza2RIzNGIwutCVCs4mCL"})
-// invokeAction({
-//   action: "add",
-//   id: "vza2RIzNGIwutCVCs4mCL",
-//   name: "Dimon Hope",
-//   email: "est@dimon.net",
-//   phone: "(258) 122-2939",
-// });
- invokeAction({action:"remove",id:"bd47a5d2-42fe-4af2-9a34-e326a74d14b5"})
+
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
+
+invokeAction(argv);
